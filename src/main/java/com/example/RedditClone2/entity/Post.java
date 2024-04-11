@@ -1,6 +1,11 @@
 package com.example.RedditClone2.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+
+import java.util.List;
 
 @Entity
 public class Post {
@@ -9,9 +14,18 @@ public class Post {
     private long id;
 
     private String title;
+    @Column(length = 2500)
     private String content;
-    private String createdDate;
-    private String updatedDate;
+    @CreationTimestamp
+    @Column(name = "created_at" ,updatable = false)
+    private String createdAt;
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private String updatedAt;
+    private long upVote;
+    private long downVote;
+    @OneToMany(mappedBy = "post")
+    private List<Comment> comments;
     @ManyToOne(cascade =
             {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "sub_reddit_id")
@@ -45,20 +59,36 @@ public class Post {
         this.content = content;
     }
 
-    public String getCreatedDate() {
-        return createdDate;
+    public String getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreatedDate(String createdDate) {
-        this.createdDate = createdDate;
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public String getUpdatedDate() {
-        return updatedDate;
+    public String getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setUpdatedDate(String updatedDate) {
-        this.updatedDate = updatedDate;
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public long getUpVote() {
+        return upVote;
+    }
+
+    public void setUpVote(long upVote) {
+        this.upVote = upVote;
+    }
+
+    public long getDownVote() {
+        return downVote;
+    }
+
+    public void setDownVote(long downVote) {
+        this.downVote = downVote;
     }
 
     public User getUser() {
@@ -75,5 +105,13 @@ public class Post {
 
     public void setSubReddit(SubReddit subReddit) {
         this.subReddit = subReddit;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 }

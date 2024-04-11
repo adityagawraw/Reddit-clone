@@ -48,5 +48,8 @@ public class PostDaoImpl implements PostDao{
         return query.getResultList();
     }
 
-
+    @Override
+    public Post getPostById(long postId) {
+        return entityManager.find(Post.class, postId);
+    }
 }

@@ -10,4 +10,7 @@ public interface PostDao {
     List<Post> getPostsBySubRedditId(long subredditId);
 
     List<Post> getPostsBySubRedditName(String subRedditName);
+
+    Post getPostById(long postId);
+
 }

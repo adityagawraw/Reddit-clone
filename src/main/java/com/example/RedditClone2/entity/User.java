@@ -13,6 +13,8 @@ public class User {
     private String username;
     private String password;
     @OneToMany(mappedBy = "user")
+    private List<Comment> comments;
+    @OneToMany(mappedBy = "user")
     List<Post> posts;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -22,6 +24,14 @@ public class User {
     )
     List<SubReddit> subreddits;
 
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
     public List<Post> getPosts() {
         return posts;
     }
@@ -29,6 +39,16 @@ public class User {
     public void setPosts(List<Post> posts) {
         this.posts = posts;
     }
+
+    public List<SubReddit> getSubreddits() {
+        return subreddits;
+    }
+
+    public void setSubreddits(List<SubReddit> subreddits) {
+        this.subreddits = subreddits;
+    }
+
+
 
     public long getId() {
         return id;

@@ -1,0 +1,46 @@
+.postBox{
+    max-width: 500px;
+    border-radius: 10px;
+    border: 1px black solid;
+    padding: 3px 10px 3px 10px;
+}
+.postBox:hover{
+    background-color: #f4f4f4;
+    cursor: pointer;
+}
+.postLink{
+    text-decoration: none;
+    color:  inherit;
+}
+.postTitle{
+    color: rgb(66, 65, 65);
+}
+.postContent{
+    color: rgb(54, 54, 54);
+}
+.postBoxBottom{
+    display: grid;
+    grid-template-columns: 1fr 1fr 4fr;
+
+}
+.postBoxVote{
+    border-radius: 15px;
+    background-color: #dadada;
+    padding: 8px;
+    margin: 2px;
+}
+.vote{
+    font-size: 30px;
+    font-weight: bold;
+}
+.vote:hover{
+    color: #ff4500;
+
+}
+
+.postBoxComment{
+    border-radius: 15px;
+    background-color: #dadada;
+    padding: 8px;
+    margin: 2px;
+}

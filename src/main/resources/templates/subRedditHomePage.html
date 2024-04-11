@@ -3,12 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="/css/subRedditPage.css">
 </head>
 <body>
 home page
-<div th:text="${date}"></div>
-<div>
-    <p th:each="post : ${posts}" th:text="${post.content}"></p>
+<div class="postBox" th:each="post : ${posts}">
+    <a href="" class="postLink">
+        <div class="postInfo">
+            <span>u/</span><span>userName</span>
+            <span>created time </span>
+        </div>
+        <h2 class="postTitle" th:text="${post.title}">
+            A place for you to showcase India's incredible beauty through generative AI.
+        </h2>
+        <p class="postContent" th:text="${post.content}">
+            A place for you to showcase India's incredible beauty through generative AI. Please post your photos and videos. This community will support you through your AI journey. Everything on here should be generated using AI tools with Indian elements or made by AI artists in India. SFW content only. When in doubt, if it's border line NSFW or politically triggering, then resist posting. Showcase AI capabilities instead of political discourse. Photos and videos welcome.
+        </p>
+    </a>
+    <div class="postBoxBottom">
+        <div class="postBoxVote">
+            <span class="vote"> + </span>
+            <span> 100 </span>
+            <span class="vote"> - </span>
+        </div>
+        <div class="postBoxComment">
+            <span>comments</span>
+            <span> 100</span>
+        </div>
+    </div>
 </div>
 </body>
 </html>
