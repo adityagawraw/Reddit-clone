@@ -1,10 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Posts</title>
+    <link rel="stylesheet" type="text/css" href="/css/subRedditPage.css">
+
 </head>
 <body>
+<div class="postBox">
+    <a href="" class="postLink">
+        <div class="postInfo">
+            <span>u/</span><span th:text="${post.user.username}"></span>
+            <span th:text="${post.createdAt}"> </span>
+        </div>
+        <h2 class="postTitle" th:text="${post.title}">
+            A place for you to showcase India's incredible beauty through generative AI.
+        </h2>
+        <p class="postContent" th:text="${post.content}">
+            A place for you to showcase India's incredible beauty through generative AI. Please post your photos and videos. This community will support you through your AI journey. Everything on here should be generated using AI tools with Indian elements or made by AI artists in India. SFW content only. When in doubt, if it's border line NSFW or politically triggering, then resist posting. Showcase AI capabilities instead of political discourse. Photos and videos welcome.
+        </p>
+    </a>
+    <div class="postBoxBottom">
+        <div class="postBoxVote">
+            <span class="vote"> + </span>
+            <span> 100 </span>
+            <span class="vote"> - </span>
+        </div>
+        <div class="postBoxComment">
+            <span>comments</span>
+            <span> 100</span>
+        </div>
+    </div>
+</div>
+<div>
+    <form th:action="@{/addComment/{subRedditName}/{postId}(subRedditName=${subRedditName}, postId=${post.id})}"
+          th:object="${comment}" method="post">
+        <input type="text" th:field="*{comment}" placeholder="Add a comment">
+        <input type="hidden" th:field="${postId}" th:value="${postId}">
+        <input type="hidden" th:field="${subRedditName}" th:value="${subRedditName}">
+        <input type="submit" value="Comment">
+    </form>
+    <div>
+        <div th:each="comment : ${comments}" >
+            <span th:text="${comment.user.username}"> </span>
+            <span th:text="${comment.createdAt}"></span><br>
+            <p th:text="${comment.comment}"></p>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

@@ -22,12 +22,12 @@ public class SubRedditController {
         this.postDao = postDao;
     }
 
-    @GetMapping("/r/{subredditName}")
+    @GetMapping("/r/{subRedditName}")
     public String homePage(Model model,
-                           @PathVariable("subredditName") String subRedditName){
+                           @PathVariable("subRedditName") String subRedditName){
         List<Post> posts = postDao.getPostsBySubRedditName(subRedditName);
 
-        model.addAttribute("date" , new Date());
+        model.addAttribute("subRedditName" , subRedditName);
         model.addAttribute("posts", posts);
 
 
@@ -38,11 +38,13 @@ public class SubRedditController {
         SubReddit subReddit = new SubReddit();
         subReddit.addRule("Enter your Rules to Community");
         model.addAttribute("subReddit", subReddit);
+
         return "newSubReddit";
     }
     @PostMapping("/processCreateSubReddit")
     public String processCreateSubReddit(@ModelAttribute("subReddit") SubReddit subReddit){
         subRedditService.handleNewSubReddit(subReddit);
-    return "subRedditHomePage";
+
+        return "subRedditHomePage";
     }
 }

@@ -8,10 +8,10 @@
 <body>
 home page
 <div class="postBox" th:each="post : ${posts}">
-    <a href="" class="postLink">
+    <a th:href="@{/r/{subRedditName}/{postId}(subRedditName=${subRedditName}, postId=${post.id})}" class="postLink">
         <div class="postInfo">
-            <span>u/</span><span>userName</span>
-            <span>created time </span>
+            <span>u/</span><span th:text="${post.user.username}"></span>
+            <span th:text="${post.createdAt}"> </span>
         </div>
         <h2 class="postTitle" th:text="${post.title}">
             A place for you to showcase India's incredible beauty through generative AI.
