@@ -8,4 +8,6 @@ public interface PostDao {
     public  void save(Post post, long userId, long subRedditId);
 
     List<Post> getPostsBySubRedditId(long subredditId);
+
+    List<Post> getPostsBySubRedditName(String subRedditName);
 }

@@ -37,4 +37,16 @@ public class PostDaoImpl implements PostDao{
 
         return query.getResultList();
     }
+
+    @Override
+    public List<Post> getPostsBySubRedditName(String subRedditName) {
+        TypedQuery<Post> query = entityManager.createQuery(
+                "SELECT p FROM Post p WHERE p.subReddit.name = :subRedditName",
+                Post.class);
+        query.setParameter("subRedditName", subRedditName);
+
+        return query.getResultList();
+    }
+
+
 }

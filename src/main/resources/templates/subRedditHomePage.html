@@ -7,5 +7,8 @@
 <body>
 home page
 <div th:text="${date}"></div>
+<div>
+    <p th:each="post : ${posts}" th:text="${post.content}"></p>
+</div>
 </body>
 </html>

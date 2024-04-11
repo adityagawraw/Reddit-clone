@@ -7,10 +7,7 @@ import com.example.RedditClone2.service.SubRedditService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
@@ -25,11 +22,15 @@ public class SubRedditController {
         this.postDao = postDao;
     }
 
-    @GetMapping("/r/{subredditId}")
+    @GetMapping("/r/{subredditName}")
     public String homePage(Model model,
-                           @RequestParam("subredditId") long subredditId){
-        List<Post> posts = postDao.getPostsBySubRedditId(subredditId);
+                           @PathVariable("subredditName") String subRedditName){
+        List<Post> posts = postDao.getPostsBySubRedditName(subRedditName);
+
         model.addAttribute("date" , new Date());
+        model.addAttribute("posts", posts);
+
+
         return "subRedditHomePage";
     }
     @GetMapping("/createSubReddit")

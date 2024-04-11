@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -28,14 +29,17 @@ public class PostController {
     @GetMapping("/createPost")
     public String createNewPostPage(Model model){
         List<SubReddit> subReddits = subRedditDao.getAllSubReddits();
+
         model.addAttribute("subreddits", subReddits);
         model.addAttribute("post", new PostModel());
+
         return  "createPost";
     }
 
     @PostMapping("/handleNewPost")
     public String handleNewPost(@ModelAttribute("post") PostModel postModel){
-          long subRedditId = postService.handleNewPost(postModel);
-        return "redirect: /r/"+subRedditId;
+        SubReddit subReddit = postService.handleNewPost(postModel);
+
+        return "redirect:/r/"+subReddit.getName();
     }
 }
