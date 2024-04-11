@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Create New Sub Reddit</title>
+</head>
+<body>
+<nav>
+    <div>
+        <p>Reddit</p>
+    </div>
+    <div>
+        <input type="text">
+    </div>
+    <div>
+        <button>+ Create</button>
+    </div>
+</nav>
+
+<div>
+    <form th:action="@{/processCreateSubReddit}" th:object="${subReddit}" method="POST">
+        <p>Name</p>
+        <input type="text" th:field="${subReddit.name}"><br>
+        <p>Daily limit</p>
+        <input type="number" name="" id="" th:field="${subReddit.dailyLimit}"><br>
+        <p>Description</p>
+        <textarea name="" cols="30" rows="10" th:field="${subReddit.description}"></textarea><br>
+        <p>Rules of Sub Reddit</p>
+        <textarea name="" cols="30" rows="10"
+                  placeholder="Seperate Rules using '+' character"
+                  th:field="${subReddit.rules[0]}">
+        </textarea><br>
+        <input type="submit" placeholder="create Subreddit">
+    </form>
+</div>
+</body>
+</html>
