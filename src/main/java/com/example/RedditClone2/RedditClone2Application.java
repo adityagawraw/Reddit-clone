@@ -12,6 +12,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.util.List;
+
 @SpringBootApplication
 public class RedditClone2Application {
 
@@ -27,12 +29,20 @@ public class RedditClone2Application {
 		return runner->{
 			System.out.println("runner");
 //			saveUser(userDAO);
-			savePost( postDao, userDAO);
+//			savePost( postDao, userDAO);
 //			getPosts(userDAO);
 //			getPostsPerUser(userDAO);
 //			addSubReddit(subRedditDao, userDAO);
 //			addSubscribersToSubReddit(subRedditDao, userDAO);
+			getallSubReddits(subRedditDao);
 		};
+	}
+
+	private void getallSubReddits(SubRedditDao subRedditDao) {
+		List<SubReddit> subRedditList = subRedditDao.getAllSubReddits();
+		for(SubReddit subReddit : subRedditList){
+			System.out.println(subReddit.getName());
+		}
 	}
 
 	private void addSubscribersToSubReddit(SubRedditDao subRedditDao, UserDao userDAO) {

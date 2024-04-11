@@ -2,6 +2,8 @@ package com.example.RedditClone2.repository;
 
 import com.example.RedditClone2.entity.SubReddit;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
+import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -37,6 +39,7 @@ public class SubRedditDaoImpl implements SubRedditDao{
 
     @Override
     public List<SubReddit> getAllSubReddits() {
-        return null;
+        TypedQuery<SubReddit> query = entityManager.createQuery("SELECT sr FROM SubReddit sr", SubReddit.class);
+        return query.getResultList();
     }
 }

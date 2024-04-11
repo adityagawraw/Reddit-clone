@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -7,11 +7,17 @@
 <body>
 <div>
     <p>Create a post</p>
-    <form action="">
+    <form th:action="@{/handleNewPost}" th:object="${post}" method="post">
         <p>Choose a community</p>
-        <select name="" id=""></select><br>
-        <input type="text" placeholder="Title"><br>
-        <textarea name="" id="" cols="30" rows="10" placeholder="Text(Optional)"></textarea><br>
+        <select name="" th:field="*{subRedditId}">
+            <option th:each="subreddit : ${subreddits}"
+                    th:value="${subreddit.id}"
+                    th:text="${subreddit.name}"></option>
+        </select><br>
+        <input type="text" placeholder="Title" th:field="*{title}"><br>
+        <textarea name="" cols="30" rows="10"
+                  placeholder="Text(Optional)"
+                  th:field="*{content}"></textarea><br>
         <input type="submit" value="Post" >
     </form>
 </div>
