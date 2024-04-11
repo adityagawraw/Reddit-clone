@@ -13,11 +13,12 @@ public class PostService {
         this.postDao = postDao;
     }
 
-    public void handleNewPost(PostModel postModel){
+    public long handleNewPost(PostModel postModel){
         Post post = new Post();
         post.setTitle(postModel.getTitle());
         post.setContent(postModel.getContent());
 
         postDao.save(post, 2, postModel.getSubRedditId());
+        return post.getSubReddit().getId();
     }
 }

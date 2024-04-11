@@ -34,8 +34,16 @@ public class RedditClone2Application {
 //			getPostsPerUser(userDAO);
 //			addSubReddit(subRedditDao, userDAO);
 //			addSubscribersToSubReddit(subRedditDao, userDAO);
-			getallSubReddits(subRedditDao);
+//			getallSubReddits(subRedditDao);
+//			getPostsBySubReDID(postDao);
 		};
+	}
+
+	private void getPostsBySubReDID(PostDao postDao) {
+		List<Post> posts = postDao.getPostsBySubRedditId(5);
+		for (Post post :posts){
+			System.out.println(post);
+		}
 	}
 
 	private void getallSubReddits(SubRedditDao subRedditDao) {

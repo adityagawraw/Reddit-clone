@@ -35,7 +35,7 @@ public class PostController {
 
     @PostMapping("/handleNewPost")
     public String handleNewPost(@ModelAttribute("post") PostModel postModel){
-        postService.handleNewPost(postModel);
-        return "subRedditHomePage";
+          long subRedditId = postService.handleNewPost(postModel);
+        return "redirect: /r/"+subRedditId;
     }
 }
