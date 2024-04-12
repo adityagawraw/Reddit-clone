@@ -16,6 +16,8 @@ public class User {
     private List<Comment> comments;
     @OneToMany(mappedBy = "user")
     List<Post> posts;
+    @OneToMany(mappedBy = "user")
+    List<VotePost> votePosts;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "subreddit_subscriber",
@@ -23,6 +25,14 @@ public class User {
             joinColumns = @JoinColumn(name = "subscriber_id")
     )
     List<SubReddit> subreddits;
+
+    public List<VotePost> getVotePosts() {
+        return votePosts;
+    }
+
+    public void setVotePosts(List<VotePost> votePosts) {
+        this.votePosts = votePosts;
+    }
 
     public List<Comment> getComments() {
         return comments;

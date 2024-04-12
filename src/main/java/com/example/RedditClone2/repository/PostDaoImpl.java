@@ -52,4 +52,10 @@ public class PostDaoImpl implements PostDao{
     public Post getPostById(long postId) {
         return entityManager.find(Post.class, postId);
     }
+
+    @Override
+    @Transactional
+    public void update(Post post) {
+    entityManager.merge(post);
+    }
 }

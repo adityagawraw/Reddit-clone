@@ -22,13 +22,17 @@
     </a>
     <div class="postBoxBottom">
         <div class="postBoxVote">
-            <span class="vote"> + </span>
-            <span> 100 </span>
-            <span class="vote"> - </span>
+            <form>
+                <span class="vote"> + </span>
+            </form>
+            <span th:text="${post.upVote - post.downVote}"></span>
+            <form>
+                <span class="vote"> - </span>
+            </form>
         </div>
         <div class="postBoxComment">
             <span>comments</span>
-            <span> 100</span>
+            <span th:text="${#lists.size(comments)}"></span>
         </div>
     </div>
 </div>
@@ -36,9 +40,7 @@
     <form th:action="@{/addComment/{subRedditName}/{postId}(subRedditName=${subRedditName}, postId=${post.id})}"
           th:object="${comment}" method="post">
         <input type="text" th:field="*{comment}" placeholder="Add a comment">
-        <input type="hidden" th:field="${postId}" th:value="${postId}">
-        <input type="hidden" th:field="${subRedditName}" th:value="${subRedditName}">
-        <input type="submit" value="Comment">
+        <button type="submit" > Comment </button>
     </form>
     <div>
         <div th:each="comment : ${comments}" >

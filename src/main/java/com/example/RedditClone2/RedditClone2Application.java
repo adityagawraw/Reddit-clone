@@ -1,18 +1,12 @@
 package com.example.RedditClone2;
 
-import com.example.RedditClone2.entity.Comment;
-import com.example.RedditClone2.entity.Post;
-import com.example.RedditClone2.entity.SubReddit;
-import com.example.RedditClone2.entity.User;
-import com.example.RedditClone2.repository.CommentDao;
-import com.example.RedditClone2.repository.PostDao;
-import com.example.RedditClone2.repository.SubRedditDao;
-import com.example.RedditClone2.repository.UserDao;
-import org.hibernate.Session;
+import com.example.RedditClone2.entity.*;
+import com.example.RedditClone2.repository.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 import java.util.List;
 
@@ -27,7 +21,8 @@ public class RedditClone2Application {
 	public CommandLineRunner commandLineRunner(UserDao userDAO,
 											   PostDao postDao,
 											   SubRedditDao subRedditDao,
-											   CommentDao commentDao
+											   CommentDao commentDao,
+											   VotePostDao votePostDao
 	){
 		return runner->{
 			System.out.println("runner");
@@ -41,7 +36,75 @@ public class RedditClone2Application {
 //			getPostsBySubReDID(postDao);
 //			addComment(commentDao);
 //			getCommentsOfPost(commentDao);
+//			addUpVotePost(votePostDao, postDao);
+//			addDownVotePost(votePostDao, postDao);
+			changeVoteOFPost(votePostDao, postDao);
 		};
+	}
+
+
+	private void changeVoteOFPost(VotePostDao votePostDao, PostDao postDao) {
+		VotePost votePost;
+		try{
+			votePost = votePostDao.findVotePostByUserIdPostId(1, 1);
+			Post post = postDao.getPostById(1);
+			System.out.println(votePost);
+
+			//		boolean vote = true;
+//
+//		if(vote){
+//			if(votePost.isUpVote()){
+//				votePost.setUpVote(false);
+//				post.setUpVote(post.getUpVote()-1);
+//			}
+//			else{
+//				votePost.setUpVote(true);
+//				votePost.setDownVote(false);
+//				post.setUpVote(post.getUpVote()+1);
+//				post.setDownVote(post.getDownVote()-1);
+//			}
+//        }
+//		else{
+//			if(votePost.isDownVote()){
+//				votePost.setDownVote(false);
+//				post.setDownVote(post.getDownVote()-1);
+//			}
+//			else{
+//				votePost.setDownVote(true);
+//				votePost.setUpVote(false);
+//				post.setDownVote(post.getDownVote()+1);
+//				post.setUpVote(post.getUpVote()-1);
+//			}
+//        }
+//        votePostDao.update(votePost);
+//        postDao.update(post);
+		}
+		catch (EmptyResultDataAccessException e){
+			System.out.println("vote post null for userid");;
+		}
+    }
+	private void addDownVotePost(VotePostDao votePostDao, PostDao postDao) {
+		VotePost votePost = new VotePost();
+		votePost.setUpVote(false);
+		votePost.setDownVote(true);
+		votePostDao.save(votePost, 1, 1);
+
+		Post post = postDao.getPostById(1);
+		post.setDownVote(post.getDownVote()+1);
+
+		postDao.update(post);
+	}
+
+	private void addUpVotePost(VotePostDao votePostDao, PostDao postDao) {
+		VotePost votePost = new VotePost();
+		votePost.setUpVote(true);
+		votePost.setDownVote(false);
+		votePostDao.save(votePost, 1, 1);
+
+		Post post = postDao.getPostById(1);
+		post.setUpVote(post.getUpVote()+1);
+
+		postDao.update(post);
 	}
 
 	private void getCommentsOfPost(CommentDao commentDao) {
@@ -99,7 +162,7 @@ public class RedditClone2Application {
 		Post post = new Post();
 		post.setTitle(" 3 post");
 		post.setContent("no content");
-//		post.setUser(user);
+
 		postDao.save(post, 2, 5);
 	}
 

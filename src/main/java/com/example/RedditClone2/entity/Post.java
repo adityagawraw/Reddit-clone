@@ -22,10 +22,12 @@ public class Post {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private String updatedAt;
-    private long upVote;
-    private long downVote;
+    private long upVote = 0;
+    private long downVote = 0;
     @OneToMany(mappedBy = "post")
     private List<Comment> comments;
+    @OneToMany(mappedBy = "post")
+    private List<VotePost> votePosts;
     @ManyToOne(cascade =
             {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "sub_reddit_id")
@@ -113,5 +115,13 @@ public class Post {
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    public List<VotePost> getVotePosts() {
+        return votePosts;
+    }
+
+    public void setVotePosts(List<VotePost> votePosts) {
+        this.votePosts = votePosts;
     }
 }

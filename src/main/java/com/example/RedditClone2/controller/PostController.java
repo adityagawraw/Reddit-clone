@@ -3,12 +3,15 @@ package com.example.RedditClone2.controller;
 import com.example.RedditClone2.entity.Comment;
 import com.example.RedditClone2.entity.Post;
 import com.example.RedditClone2.entity.SubReddit;
+import com.example.RedditClone2.entity.VotePost;
 import com.example.RedditClone2.model.PostModel;
 import com.example.RedditClone2.repository.CommentDao;
 import com.example.RedditClone2.repository.PostDao;
 import com.example.RedditClone2.repository.SubRedditDao;
+import com.example.RedditClone2.repository.VotePostDao;
 import com.example.RedditClone2.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,15 +28,18 @@ public class PostController {
     private PostService postService;
     private PostDao postDao;
     private CommentDao commentDao;
+    private VotePostDao votePostDao;
     @Autowired
     public PostController(SubRedditDao subRedditDao,
                           PostService postService,
                           CommentDao commentDao,
-                          PostDao postDao) {
+                          PostDao postDao,
+                          VotePostDao votePostDao) {
         this.subRedditDao = subRedditDao;
         this.postService = postService;
         this.commentDao = commentDao;
         this.postDao = postDao;
+        this.votePostDao = votePostDao;
     }
 
     @GetMapping("/createPost")
@@ -63,6 +69,16 @@ public class PostController {
         model.addAttribute("post", post);
         model.addAttribute("comments", comments);
         model.addAttribute("comment", new Comment());
+
+
+        VotePost votePost;
+        try{
+           votePost = votePostDao.findVotePostByUserIdPostId(1, postId);
+        }
+        catch (EmptyResultDataAccessException e){
+            votePost = new VotePost();
+        }
+        model.addAttribute("votePost", votePost);
 
         return "postPage";
     }
